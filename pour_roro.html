@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d25">
+<title>Pour RoRo ✦</title>
+<style>
+  :root { color-scheme: dark; --cream:#fff7ec; --muted:#c9cbe7; --pink:#ffbddb; }
+  * { box-sizing:border-box; }
+  html { min-height:100%; }
+  body {
+    margin:0; min-height:100vh; overflow-x:hidden; color:var(--cream);
+    font-family: ui-rounded, "Trebuchet MS", system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(73,83,155,.42), transparent 48%),
+      radial-gradient(ellipse at 12% 70%, rgba(93,51,125,.24), transparent 42%),
+      linear-gradient(160deg,#080b20 0%,#121633 55%,#090d22 100%);
+  }
+  .sky { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+  .star { position:absolute; color:#fff8d7; opacity:.72; animation:twinkle 3.5s ease-in-out infinite alternate; }
+  @keyframes twinkle { from { opacity:.25; transform:scale(.8); } to { opacity:1; transform:scale(1.18); } }
+  .shooting { position:absolute; width:90px; height:1px; background:linear-gradient(90deg,transparent,#fff,transparent); transform:rotate(-35deg); opacity:0; animation:shoot 8s linear infinite; }
+  @keyframes shoot { 0%,72% { opacity:0; transform:translate(0,0) rotate(-35deg); } 74% { opacity:.9; } 82% { opacity:0; transform:translate(-180px,110px) rotate(-35deg); } 100% { opacity:0; } }
+  main { position:relative; z-index:1; width:min(100% - 32px,680px); margin:auto; padding:50px 0 42px; text-align:center; }
+  .moon { width:100px; height:100px; margin:8px auto 22px; border-radius:50%; position:relative; background:radial-gradient(circle at 32% 30%,#fffce7,#f6e9c9 55%,#d5c7e7); box-shadow:0 0 28px #f8e5c966,0 0 90px #b4b6ff22; }
+  .moon:after { content:""; position:absolute; width:88px; height:88px; border-radius:50%; background:#10142e; top:-7px; left:25px; }
+  .eyebrow { letter-spacing:.22em; text-transform:uppercase; font-size:.72rem; color:#c8c8ee; }
+  h1 { font-size:clamp(2.6rem,9vw,4.7rem); line-height:1.04; letter-spacing:-.045em; margin:14px 0 12px; font-weight:700; }
+  h1 span { color:var(--pink); }
+  .subtitle { color:var(--muted); line-height:1.7; max-width:470px; margin:0 auto; font-size:1.02rem; }
+  .envelope-wrap { margin:36px auto 0; }
+  .envelope { border:1px solid #ffffff24; background:linear-gradient(145deg,#ffffff0d,#ffffff05); box-shadow:0 22px 70px #0005; border-radius:24px; padding:25px 22px; backdrop-filter:blur(8px); }
+  .seal { width:58px; height:58px; border-radius:50%; display:grid; place-items:center; margin:0 auto 15px; font-size:1.6rem; background:linear-gradient(145deg,#ffd7e7,#c7b7ff); box-shadow:0 0 35px #ffbddb25; }
+  .envelope h2 { font-size:1.25rem; margin:0 0 8px; }
+  .envelope p { color:#d9daed; line-height:1.75; margin:0 auto 18px; max-width:470px; }
+  button { border:0; cursor:pointer; font:inherit; font-weight:700; border-radius:999px; padding:13px 20px; color:#211630; background:linear-gradient(100deg,#ffd1e3,#d9ccff); box-shadow:0 7px 24px #bda8ff24; transition:transform .2s, filter .2s; }
+  button:hover { transform:translateY(-2px); filter:brightness(1.06); }
+  .letter { display:none; margin-top:18px; text-align:left; border:1px solid #ffffff24; border-radius:22px; padding:24px; background:#0b1028d9; animation:appear .6s ease both; }
+  .letter.show { display:block; }
+  @keyframes appear { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  .letter p { color:#f0edf9; line-height:1.9; margin:0 0 15px; }
+  .signature { color:var(--pink); font-size:1.15rem; font-weight:700; margin-top:22px; }
+  .foot { margin-top:30px; color:#9297c2; font-size:.78rem; line-height:1.7; }
+  .heart { color:#ffbddb; }
+  @media (max-width:480px) { main { padding-top:34px; } .envelope { padding:22px 17px; } .letter { padding:20px 18px; } }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
+</style>
+</head>
+<body>
+<div class="sky" id="sky" aria-hidden="true">
+  <div class="shooting" style="top:22%;left:78%;animation-delay:2s"></div>
+  <div class="shooting" style="top:55%;left:45%;animation-delay:6s"></div>
+</div>
+<main>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="eyebrow">Un petit morceau de ciel, juste pour toi</div>
+  <h1>Pour toi,<br><span>RoRo</span> ✦</h1>
+  <p class="subtitle">Il y a des personnes qui laissent une lumière dans notre vie. Même quand les chemins changent, cette lumière a compté.</p>
+
+  <section class="envelope-wrap">
+    <div class="envelope">
+      <div class="seal" aria-hidden="true">💌</div>
+      <h2>Une lettre sous les étoiles</h2>
+      <p>J’ai gardé quelques mots pour toi. Ouvre cette petite lettre quand tu en auras envie.</p>
+      <button id="openLetter" type="button" aria-expanded="false" aria-controls="letter">Ouvrir ma lettre ✨</button>
+    </div>
+    <article class="letter" id="letter" aria-live="polite">
+      <p>RoRo,</p>
+      <p>Je ne sais pas ce que la vie nous réserve, ni où nos chemins nous mèneront. Mais je voulais que tu saches une chose : tu as eu une place spéciale dans ma vie, et ce que nous avons partagé a compté pour moi.</p>
+      <p>Il y aura peut-être des jours où nos souvenirs sembleront loin, et d’autres où une chanson, un endroit ou un ciel étoilé te les rappellera. Si ça arrive, j’espère que tu te souviendras aussi des beaux moments, des sourires et de tout ce qui était sincère.</p>
+      <p>Je ne t’écris pas pour te demander quoi que ce soit, ni pour te retenir. Je voulais simplement te laisser ces mots, avec tendresse et respect. Tu n’as pas besoin de répondre. Je te souhaite de trouver de la paix, de la joie et beaucoup de belles choses sur ton chemin.</p>
+      <p>Prends soin de toi, RoRo. Peu importe le temps qui passe, tu resteras quelqu’un qui a compté pour moi. <span class="heart">♡</span></p>
+      <p class="signature">Avec tendresse, toujours reconnaissant pour nos souvenirs ✦</p>
+    </article>
+  </section>
+  <p class="foot">Pour Romane (RoRo) · Une petite lumière dans le ciel.<br>Tu peux revenir lire ces mots quand tu le souhaites.</p>
+</main>
+<script>
+  const sky = document.getElementById('sky');
+  for (let i = 0; i < 72; i++) {
+    const s = document.createElement('span');
+    s.className = 'star';
+    s.textContent = Math.random() > .78 ? '✦' : '·';
+    s.style.left = (Math.random() * 100) + '%';
+    s.style.top = (Math.random() * 100) + '%';
+    s.style.fontSize = (Math.random() * 12 + 5) + 'px';
+    s.style.animationDelay = (Math.random() * 4) + 's';
+    sky.appendChild(s);
+  }
+  const button = document.getElementById('openLetter');
+  const letter = document.getElementById('letter');
+  button.addEventListener('click', () => {
+    const isOpen = letter.classList.toggle('show');
+    button.textContent = isOpen ? 'Refermer la lettre ✨' : 'Ouvrir ma lettre ✨';
+    button.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) letter.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
+</body>
+</html>
