@@ -43,6 +43,21 @@
   .signature { color:var(--pink); font-size:1.15rem; font-weight:700; margin-top:22px; }
   .foot { margin-top:30px; color:#9297c2; font-size:.78rem; line-height:1.7; }
   .heart { color:#ffbddb; }
+
+  .winter-gate { margin:42px auto 0; padding:30px 18px 26px; border:1px solid #d8eaff38; border-radius:26px; background:linear-gradient(180deg,#c8e8ff12,#081326df),radial-gradient(ellipse at 50% 0%,#b9e6ff2c,transparent 65%); box-shadow:0 20px 70px #0008; position:relative; overflow:hidden; }
+  .winter-gate:before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.35; background:repeating-linear-gradient(115deg,transparent 0 34px,#d9efff12 35px 36px); }
+  .winter-gate > * { position:relative; }
+  .winter-gate h2 { font-family:Georgia,serif; font-size:clamp(1.6rem,6vw,2.5rem); letter-spacing:.04em; margin:10px 0; text-shadow:0 3px 18px #b8e5ff66; }
+  .winter-gate .intro { color:#d4e6f7; line-height:1.7; max-width:480px; margin:0 auto 24px; }
+  .gate-pair { display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:560px; margin:auto; }
+  .gate-card { min-height:220px; border:1px solid #d6eaff70; border-radius:14px 14px 8px 8px; padding:18px 12px; color:#f5f8ff; background:linear-gradient(90deg,#101d31,#30445c 48%,#101d31); box-shadow:inset 0 0 0 5px #c9e4ff14,inset 0 0 35px #000a,0 14px 30px #0008; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; }
+  .gate-card:before { content:""; width:58px; height:58px; border:1px solid #d9efff9c; border-radius:50%; background:radial-gradient(circle,#d7f1ff35,#07101f 70%); box-shadow:0 0 25px #b9e7ff40; }
+  .gate-card strong { font-family:Georgia,serif; font-size:clamp(1rem,3.4vw,1.35rem); }
+  .gate-card small { color:#c9d8e9; line-height:1.5; font-weight:400; }
+  .gate-card:hover { transform:translateY(-4px); filter:brightness(1.2); }
+  .gate-detail { display:none; margin:20px auto 0; max-width:500px; padding:18px; border:1px solid #d8eaff45; border-radius:16px; background:#071326eF; color:#e3efff; line-height:1.7; animation:appear .5s ease both; }
+  .gate-detail.show { display:block; }
+  @media(max-width:480px) { .gate-pair { gap:9px; } .gate-card { min-height:190px; padding:14px 8px; } }
   @media (max-width:480px) { main { padding-top:34px; } .envelope { padding:22px 17px; } .letter { padding:20px 18px; } }
   @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
 </style>
@@ -74,6 +89,24 @@
       <p class="signature">Avec tendresse, toujours reconnaissant pour nos souvenirs ✦</p>
     </article>
   </section>
+
+  <section class="winter-gate" id="winterGate" aria-label="Les deux portes">
+    <div class="eyebrow">Au-delà de cette lettre</div>
+    <h2>Deux portes, deux mondes</h2>
+    <p class="intro">Un royaume d’hiver garde deux passages. L’un mène aux souvenirs que vous avez réellement partagés. L’autre ouvre sur les instants d’un avenir imaginé avec douceur.</p>
+    <div class="gate-pair">
+      <button class="gate-card" type="button" data-gate="history">
+        <strong>Notre Histoire</strong>
+        <small>Les vrais souvenirs, les dates et les moments vécus.</small>
+      </button>
+      <button class="gate-card" type="button" data-gate="future">
+        <strong>Notre Futur Imaginé</strong>
+        <small>Une vie quotidienne possible, racontée comme un rêve réaliste.</small>
+      </button>
+    </div>
+    <div class="gate-detail" id="gateDetail" aria-live="polite"></div>
+  </section>
+
   <p class="foot">Pour Romane (RoRo) · Une petite lumière dans le ciel.<br>Tu peux revenir lire ces mots quand tu le souhaites.</p>
 </main>
 <script>
@@ -88,6 +121,20 @@
     s.style.animationDelay = (Math.random() * 4) + 's';
     sky.appendChild(s);
   }
+
+  const gateDetail = document.getElementById('gateDetail');
+  document.querySelectorAll('[data-gate]').forEach((gate) => {
+    gate.addEventListener('click', () => {
+      const isHistory = gate.dataset.gate === 'history';
+      gateDetail.innerHTML = isHistory
+        ? '<strong>Notre Histoire</strong><br>Cette porte accueillera vos vrais souvenirs, vos photos, vos dates et les chansons liées à chaque étape. Rien ne sera inventé.'
+        : '<strong>Notre Futur Imaginé</strong><br>Cette porte mènera à votre maison moderne, au jardin et à la piscine, au garage avec la BMW M5 E60 noire et l’Audi A3 S line, puis à des scènes de vie quotidienne imaginées avec réalisme.';
+      gateDetail.classList.remove('show');
+      requestAnimationFrame(() => gateDetail.classList.add('show'));
+      gateDetail.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+  });
+
   const button = document.getElementById('openLetter');
   const letter = document.getElementById('letter');
   button.addEventListener('click', () => {
